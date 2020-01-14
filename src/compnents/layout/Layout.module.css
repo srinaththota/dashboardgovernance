@@ -1,15 +1,17 @@
 .container{
+    width: 100%;
     display: grid;
-    grid-template-rows:70%;
+    grid-template-columns:50% 50%;
 }
 
 .childcomp{
     width:100%;
+    padding: 10px;
     background-color: aqua;
 }
 .headercontent{
     text-align: center;
-    top:20px;
     padding: 30px;
+    width: 100%;
     border: 1px solid black;
 }
