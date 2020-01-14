@@ -1,0 +1,15 @@
+.container{
+    display: grid;
+    grid-template-rows:70%;
+}
+
+.childcomp{
+    width:100%;
+    background-color: aqua;
+}
+.headercontent{
+    text-align: center;
+    top:20px;
+    padding: 30px;
+    border: 1px solid black;
+}
