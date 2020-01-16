@@ -1,6 +1,9 @@
 import React , {Component} from 'react';
-
+import { compose } from 'redux';
 import {connect} from 'react-redux';
+import {reduxForm , Field} from 'redux-form';
+import * as actions from '../../actions/LoginActions';
+
 
 class Login extends Component{
 
@@ -12,59 +15,68 @@ class Login extends Component{
         validate:true
     }
 
-    
-    storeCredentials=()=>{
-        console.log("clicked");
-        if(this.state.username==='srinath'){
+    onsubmit=(formProps)=>{
+     
+        this.props.signIndisp(formProps.email,formProps.password);
+        if(this.props.crds.username==='sri'){
+            console.log('Name captured*******************');
             
-            this.setState({
-                ...this.state.creds,
-                validate:false
-            });
-            this.props.credsAddtoStore(this.state.username,this.state.password);
         }
-        console.log(this.state.username);
-
-    }
+        else{
+            document.write("not validated username");
+        }
+        }
+    
     render(){
-        
+        const {handleSubmit}=this.props;
         return(
+
             <div>
-               
-                {this.state.validate?
-                <div>
-                <input type="text"  placeholder="Username" 
-                onChange={event=>this.setState({username:event.target.value})} 
-                ></input>
-                <input type="password"  
-                placeholder="password"
-                onChange={event=>this.setState({password:event.target.value})}
-                ></input>
-                <button onClick={this.storeCredentials}>Go</button>
-                
-                </div>:
-                <div>
-               Welcome {this.props.username}
-               <a href="logout">Logout</a>    
-                </div>
-            }
-            
-            </div>
+            <form onSubmit={handleSubmit(this.onsubmit)}>
+                <fieldset>
+                    <label>
+                        Email
+                    </label>
+                    <Field
+                    name="email"
+                    type="text"
+                    component="input"
+                    autoComplete="none"
+                    />
+                </fieldset>
+                <fieldset>
+                    <label>
+                        Password
+                    </label>
+                    <Field
+                    name="password"
+                    type="password"
+                    component="input"
+                    autoComplete="none"
+                    />
+                </fieldset>
+                <button>SignIn</button>
+            </form>
+        
+            </div>            
         );
     }
 }
 
 const mapStateToProps=state=>{
 return{
-    crds:state.creds
+    crds:state
 };
 }
 
 const mapDispatchtoProps=dispatch=>{
-
-    return{
-        credsAddtoStore:(username, password)=>dispatch({type:'STORECREDS',username:username,password:password})
+return{
+        signIndisp:(username, password)=>dispatch(actions.signin(username,password))
     }
 }
 
-export default connect(mapStateToProps,mapDispatchtoProps)(Login);
+//export default connect(mapStateToProps,mapDispatchtoProps)(Login);
+export default compose(
+connect(mapStateToProps,mapDispatchtoProps),
+reduxForm({form:'signin'}),
+)(Login);

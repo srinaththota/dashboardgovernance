@@ -9,9 +9,7 @@ class Layout extends Component{
     render(){
         return(
             <div>
-            <div className={classes.headercontent}>
-                <Header/>
-                </div>
+            
             <div className={classes.container}>
                 <div className={classes.childcomp}><LanguageBD/></div>
                 <div className={classes.childcomp}><ActiveDevelopers/></div>
